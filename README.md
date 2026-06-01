@@ -1,4 +1,3 @@
-```markdown
 # IG Unfollowers Checker
 
 สคริปต์สำหรับหาบัญชีบน Instagram ที่ "เราติดตามเขา แต่เขาไม่ได้ติดตามเรากลับ" 
@@ -29,8 +28,11 @@ async function autoScrollAndCollect() {
         const links = dialog.querySelectorAll('a[role="link"][href^="/"]');
         const usernames = new Set();
         links.forEach(link => {
-            const username = link.getAttribute('href').replace(/\//g, '');
-            if (username && username !== 'explorepeople' && !username.includes('?')) {
+            // หั่นเอาแค่ชื่อ ตัดพารามิเตอร์ต่างๆ (เช่น ?hl=th) และเครื่องหมาย / ออก
+            const rawHref = link.getAttribute('href');
+            const username = rawHref.split('?')[0].replace(/\//g, '');
+            
+            if (username && username !== 'explorepeople') {
                 usernames.add(username);
             }
         });
@@ -120,4 +122,3 @@ link.click();
 ## 📌 ข้อควรระวัง
 
 เมื่อได้รายชื่อแล้ว แนะนำให้ค้นหาและกด Unfollow ด้วยตัวเองทีละคน **อย่ากดรัวๆ หรือใช้บอทกด Unfollow อัตโนมัติ** เพราะอาจทำให้บัญชีของคุณโดนบล็อกการกระทำ (Action Block) จากระบบป้องกันสแปมของ Instagram ได้
-
